@@ -1,6 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
-body {
-  font-family: "Nunito", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
+html {
+  font-size: 62.5%;
+}
+
+body, p, span {
+  font-size: 1.6rem;
+  font-family: "Rubik Mono One", sans-serif;
 }
 
 * {
@@ -9,91 +14,93 @@ body {
   box-sizing: border-box;
 }
 
-html {
-  font-size: 62.5%;
+body {
+  background: #F8DAB7;
 }
 
-body {
-  font-size: 1.6rem;
-  height: 100vh;
+.page_wrap {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto 0 auto;
+}
+
+.uppgrade_wrap {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 7rem 0 10rem 0;
+}
+
+.click_lvl, .passive_lvl, .crit_lvl, .speed_lvl {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+}
+.click_lvl__lvl, .click_lvl__cost, .passive_lvl__lvl, .passive_lvl__cost, .crit_lvl__lvl, .crit_lvl__cost, .speed_lvl__lvl, .speed_lvl__cost {
+  color: brown;
+  font-size: 2rem;
+}
+.click_lvl img, .passive_lvl img, .crit_lvl img, .speed_lvl img {
+  cursor: pointer;
+}
+.click_lvl img:active, .passive_lvl img:active, .crit_lvl img:active, .speed_lvl img:active {
+  filter: brightness(0.7);
+}
+
+.click_lvl img, .crit_lvl img {
+  transform: translateX(4.5rem);
+}
+
+.speed_lvl img {
+  transform: translateX(9rem);
 }
 
 .cookie_wrap {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  max-width: -webkit-max-content;
-  max-width: max-content;
+  align-items: center;
+  margin-bottom: 10rem;
 }
 .cookie_wrap .cookie {
-  width: 30rem;
-  height: 30rem;
+  width: 40rem;
+  height: 40rem;
   background-image: url("/svg/cookie.svg");
-  background-repeat: no-repeat;
   background-size: cover;
-}
-.cookie_wrap .cookie:hover {
+  margin-bottom: 2rem;
   cursor: pointer;
 }
 .cookie_wrap .cookie:active {
-  filter: brightness(0.8);
+  filter: brightness(0.7);
 }
-
-.points {
+.cookie_wrap .cookie__text {
+  font-size: 2.5rem;
+}
+.cookie_wrap .cookie__points {
   color: brown;
-}
-.points__wrap {
-  font-weight: bold;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
-.points__click {
-  width: 4rem;
-  height: 4rem;
+.cookie_gained {
+  width: 5rem;
+  height: 5rem;
+  pointer-events: none;
+  font-size: 4rem;
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
-  pointer-events: none;
-  font-size: 4rem;
-  font-weight: bold;
-  transition: all 300ms ease;
+  transition: all 400ms ease;
 }
 
-.display_point {
+.fade {
   opacity: 1;
   transform: translateY(20px);
 }
 
-.uppgrades {
-  margin-bottom: 3rem;
-  width: 100%;
+footer {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
-
-.points_plus_ten {
-  width: 10rem;
-  height: 5rem;
-  background-image: url("/svg/cookie_plus_ten.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
+footer span {
+  color: brown;
 }
-.points_plus_ten:hover {
-  cursor: pointer;
-}
-.points_plus_ten:active {
-  filter: brightness(0.8);
-}
-.points_plus_ten__wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-/*# sourceMappingURL=main.css.map */

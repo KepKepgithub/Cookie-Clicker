@@ -4,19 +4,36 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="./css/main.css"/>
-    <title>Document</title>
+    <title>KepKep's Cookies</title>
   </head>
   <body>
-    <div class="uppgrades">
-      <div class="points_plus_ten__wrap">
-        <div class="points_plus_ten"></div>
-        <p class="points_plus_ten__text">level:<span class="points_plus_ten__level">0</span></p>
+    <div class="page_wrap">
+      <div class="uppgrade_wrap">
+        <div class="click_lvl"><img class="click_lvl__img" src="svg/click_lvl.svg" alt="click_lvl"/>
+          <p class="click_lvl__lvl_txt">click lvl:<span class="click_lvl__lvl">0</span></p>
+          <p class="click_lvl__cost_txt">cost:<span class="click_lvl__cost">0</span></p>
+        </div>
+        <div class="passive_lvl"><img class="passive_lvl__img" src="svg/passive_lvl.svg" alt="passive_lvl"/>
+          <p class="passive_lvl__lvl_txt">passive lvl:<span class="passive_lvl__lvl">0</span></p>
+          <p class="passive_lvl__cost_txt">cost:<span class="passive_lvl__cost">0</span></p>
+        </div>
+        <div class="crit_lvl"><img class="crit_lvl__img" src="svg/crit_lvl.svg" alt="crit_lvl"/>
+          <p class="crit_lvl__lvl_txt">crit lvl:<span class="crit_lvl__lvl">0</span></p>
+          <p class="crit_lvl__cost_txt">cost:<span class="crit_lvl__cost">0</span></p>
+        </div>
+        <div class="speed_lvl"><img class="speed_lvl__img" src="svg/speed_lvl.svg" alt="speed_lvl"/>
+          <p class="speed_lvl__lvl_txt">speed lvl:<span class="speed_lvl__lvl">0</span></p>
+          <p class="speed_lvl__cost_txt">cost:<span class="speed_lvl__cost">0</span></p>
+        </div>
       </div>
+      <div class="cookie_wrap">
+        <div class="cookie"></div>
+        <p class="cookie__text">your cookies:<span class="cookie__points">0</span></p>
+      </div>
+      <footer>
+        <p>Made by: <span>KepKep(Emīls Soldatovs)</span></p>
+      </footer>
     </div>
-    <div class="cookie_wrap">
-      <div class="cookie"></div>
-    </div>
-    <div class="points__wrap"><span class="points__text1">you have: </span><span class="points">0</span><span class="points__text2"> cookies!</span></div>
     <script src="script.js"></script>
   </body>
 </html>

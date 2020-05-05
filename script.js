@@ -1,128 +1,225 @@
-// This is the text DOM for the points
-let points_text = document.querySelector(".points");
-// this is here so when the user loads up the page again the cookies are instantly uppdated to last saved instead 
-// of showing 0 and uppdating after the interval tick
-points_text.innerHTML = point_save_check();
-// This is the actual points counter (how many points are in total)
-let points = point_save_check();
-// how many points per click the person gets
-let points_per_click = points_per_click_check();
-// This is the clickable cookies
-const cookie = document.querySelector(".cookie");
+// uppgrade levels, sets inner html to their values
+let click_lvl, passive_lvl, crit_lvl, speed_lvl;
+document.querySelector('.click_lvl__lvl').innerHTML = click_lvl = click_lvl_check();
+document.querySelector('.passive_lvl__lvl').innerHTML = passive_lvl = passive_lvl_check();
+document.querySelector('.crit_lvl__lvl').innerHTML = crit_lvl = crit_lvl_check();
+document.querySelector('.speed_lvl__lvl').innerHTML = speed_lvl = speed_lvl_check();
+// uppgrade costs
+let click_cost, passive_cost, crit_cost, speed_cost;
+document.querySelector('.click_lvl__cost').innerHTML = click_cost = click_cost_check();
+document.querySelector('.passive_lvl__cost').innerHTML = passive_cost = passive_cost_check();
+document.querySelector('.crit_lvl__cost').innerHTML = crit_cost = crit_cost_check();
+document.querySelector('.speed_lvl__cost').innerHTML = speed_cost = speed_cost_check();
+// points,points per click,
+let points, points_click, passive_points, passive_speed, crit_value;
+document.querySelector('.cookie__points').innerHTML = points = points_check();
+points_click = points_click_check();
+passive_points = passive_points_check();
+passive_speed = passive_speed_check();
+crit_value = crit_value_check();
 
-// Section for all the uppgrades declerations
-const plus_ten_click_button = document.querySelector(".points_plus_ten");
-let plust_ten_click_level_text = document.querySelector(".points_plus_ten__level");
-let plust_ten_click_level = click_level_check();
-plust_ten_click_level_text.innerHTML = click_level_check();
-
-// adds 1 point every second
+// This is the constant point adding
 setInterval(() => {
-    points ++;
-    localStorage.setItem('saved','true');
-    localStorage.setItem('total_points', JSON.stringify(points));
-    points_text.innerHTML = points;
-}, 5000);
+    points += passive_points;
+    localStorage.setItem('points_saved','true');
+    localStorage.setItem('points',JSON.stringify(points));
+    document.querySelector('.cookie__points').innerHTML = points;
+}, passive_speed);
 
-cookie.onclick = ()=>{
-    // calculates will the number be double or standart
-    let x = Math.floor(Math.random() * 2)
-    switch(x){
-        // standart
-        case 0:
-            points += points_per_click;
-            points_text.innerHTML = points;
-            break;
-        // double
-        case 1:
-            points += points_per_click * 2;
-            break;
+// big cookie clicking logic
+document.querySelector('.cookie').addEventListener('click',()=>{
+    // 25% chance to crit
+    crit = Math.floor(Math.random() * 5);
+    console.log(crit);
+    // if critical hit increese the gained points by the crit val
+    if(crit == 4){
+        points += points_click * crit_value;
     }
-    // displays the points gained from click
-    points_on_click(x);
+    // else just add whatever points per click you have
+    else{
+        points += points_click
+    }
+    // so it uppdates real time every time you click
+    document.querySelector('.cookie__points').innerHTML = points;
+    // shows how many points player gained
+    points_gained(crit);
+})
+// Click lvl uppgrade
+
+document.querySelector('.click_lvl__img').addEventListener('click',()=>{
+    if(click_cost < points){
+        click_lvl++;
+        document.querySelector('.click_lvl__lvl').innerHTML = click_lvl;
+        // saves the click lvl
+        localStorage.setItem('click_lvl_saved','true');
+        localStorage.setItem('click_lvl', JSON.stringify(click_lvl));
+        // saves how many points per click you gain now
+        points_click += 10;
+        localStorage.setItem('points_click_saved','true');
+        localStorage.setItem('points_click', JSON.stringify(points_click));
+        // saves the new click price
+        points = points - click_cost;
+        click_cost = click_cost * 5;
+        document.querySelector('.click_lvl__cost').innerHTML = click_cost
+        localStorage.setItem('click_cost_saved','true');
+        localStorage.setItem('click_cost', JSON.stringify(click_cost));
+    }
+    if(click_lvl >= 10){
+        document.querySelector(".click_lvl").style.opacity = 0.5;
+        document.querySelector(".click_lvl").style.pointerEvents = "none";
+    }
+})
+
+// shows how many points the player gained
+function points_gained(crit){
+    // takes mouse coordinates
+    let mouse_x = event.clientX;
+    let mouse_y = event.clientY;
+    // creates a div and appends it to the body with all the classes
+    let flying_number = document.createElement('div');
+    document.body.appendChild(flying_number);
+    flying_number.classList.add('cookie_gained','fade');
+    // positions where the point should be
+    flying_number.style.top = mouse_y - 40 + "px";
+    flying_number.style.left = mouse_x - 40 + "px";
+    // checks if user crit
+    if(crit == 4){
+        flying_number.innerHTML = "+" + points_click * crit_value;
+        flying_number.style.color = 'red';
+    }
+    else{
+        flying_number.innerHTML = "+" + points_click;
+    }
+    // this removes the class to create the fadeout effect then after it's done removes the created div
+    setTimeout(() => {
+        flying_number.classList.remove('fade');
+        setTimeout(() => {
+            flying_number.remove();
+        }, 300);
+    }, 300);
 }
 
-// this handles the animation / display of how many points I gained per click
-function points_on_click(x){
-    // finds the location of the mouse
-    let x_mouse = event.clientX;
-    let y_mouse = event.clientY;
-    // Creates a new div whenever the user clicks to display the points gained
-    let points_gained = document.createElement('div');
-    points_gained.classList.add('points__click',"display_point");
-    document.body.appendChild(points_gained);
-    // applies the coordinates to the div to move it on cursor
-    points_gained.style.top = y_mouse - 20 + "px";
-    points_gained.style.left = x_mouse - 20 + "px";
-    // checks if the points are double or not and does the appropriate thing
-    switch(x){
-        case 0:
-            points_gained.innerHTML = "+" + points_per_click;
-            break;
-        case 1:
-            points_gained.innerHTML = "+" + points_per_click * 2;
-            points_gained.style.color = 'hsla(11, 70%, 58%, 1)';
-            break;
-    }
-    // Timeout before the number fades out and gets removed from the HTML to not bottle performance
-    function point_timeout(){
-        points_gained.classList.remove("display_point");
-        setTimeout(div_timeout,500);
-        function div_timeout(){
-        points_gained.remove();
-        }
-    }
-    setTimeout(point_timeout,400);
-}
 
-// Gain +10 cookies per click
-plus_ten_click_button.onclick = ()=>{
-    plust_ten_click_level_text.innerHTML = plust_ten_click_level += 1;
-    localStorage.setItem('saved_click_level', 'true');
-    localStorage.setItem('click_level',JSON.stringify(plust_ten_click_level));
-    points_per_click += 10;
-    localStorage.setItem('saved_points_per_click', 'true');
-    localStorage.setItem('points_per_click',JSON.stringify(points_per_click));
-    if(plust_ten_click_level >= 10){
-        plus_ten_click_button.style.opacity = '0.5';
-        plus_ten_click_button.style.pointerEvents = 'none';
-        plust_ten_click_level_text.innerHTML = "MAX";
-    }
-}
-
-
-// Checks if the player has played before , if not sets the values to 0
-// if the player has played sets points total points to those saved in local storage
-function point_save_check(){
-    if(localStorage.getItem('saved') === 'true'){
-        return parseInt(localStorage.getItem('total_points'));
+// Everything below here is just saving and loading(if saved);
+// These check if player has played before , if they haven't then set the values to default/starter
+// This one checks for uppgrade lvls
+function click_lvl_check(){
+    if(localStorage.getItem('click_lvl_saved') === 'true'){
+        return parseInt(localStorage.getItem('click_lvl'));
     }
     else{
         return 0;
     }
 }
-// checks the click level
-function click_level_check(){
-    if(localStorage.getItem('saved_click_level') === 'true'){
-        return parseInt(localStorage.getItem('click_level'));
+
+function passive_lvl_check(){
+    if(localStorage.getItem('passive_lvl_saved') === 'true'){
+        // link to the local storage
     }
     else{
         return 0;
     }
 }
-// when scipt get's loaded checks what the click level is
-if(parseInt(localStorage.getItem('click_level')) >= 10){
-    plus_ten_click_button.style.opacity = '0.5';
-    plus_ten_click_button.style.pointerEvents = 'none';
-    plust_ten_click_level_text.innerHTML = "MAX";
-}
-// 
 
-function points_per_click_check(){
-    if(localStorage.getItem('saved_points_per_click') === 'true'){
-        return parseInt(localStorage.getItem('points_per_click'));
+function crit_lvl_check(){
+    if(localStorage.getItem('crit_lvl_saved') === 'true'){
+        // return parseInt(localStorage.getItem('crit_lvl'));
+    }
+    else{
+        return 0;
+    }
+}
+
+function speed_lvl_check(){
+    if(localStorage.getItem('speed_lvl_saved') === 'true'){
+        // link to the local storage
+    }
+    else{
+        return 0;
+    }
+}
+
+
+// this one checks for uppgrade costs
+function click_cost_check(){
+    if(localStorage.getItem('click_cost_saved') === 'true'){
+        return parseInt(localStorage.getItem('click_cost'));
+    }
+    else{
+        return 200;
+    }
+}
+function passive_cost_check(){
+    if(localStorage.getItem('passive_cost_saved') === 'true'){
+        // link to the saved number
+    }
+    else{
+        return 200;
+    }
+}
+function crit_cost_check(){
+    if(localStorage.getItem('crit_cost_saved') === 'true'){
+        // link to the saved number
+    }
+    else{
+        return 200;
+    }
+}
+function speed_cost_check(){
+    if(localStorage.getItem('speed_cost_saved') === 'true'){
+        // link to the saved number
+    }
+    else{
+        return 200;
+    }
+}
+
+// checks for points,poin ts per click, passive poits, passive_speed, crit value;
+
+function points_check(){
+    if(localStorage.getItem('points_saved') === 'true'){
+        return parseInt(localStorage.getItem('points'));
+    }
+    else{
+        return 0;
+    }
+}
+function points_click_check(){
+    if(localStorage.getItem('points_click_saved') === 'true'){
+        return parseInt(localStorage.getItem('points_click'));
     }
     else{
         return 1;
     }
+}
+function passive_points_check(){
+    if(localStorage.getItem('passive_points_saved') === 'true'){
+        // link to the saved number
+    }
+    else{
+        return 1;
+    }
+}
+function passive_speed_check(){
+    if(localStorage.getItem('passive_speed_saved') === 'true'){
+        // link to the saved number
+    }
+    else{
+        return 1500;
+    }
+}
+function crit_value_check(){
+    if(localStorage.getItem('crit_value_saved') === 'true'){
+        // link to the saved number
+    }
+    else{
+        return 1.5;
+    }
+}
+
+
+// Code here is just so the player can't re-load the page and keep leveling up
+if(click_lvl >= 10){
+    document.querySelector(".click_lvl").style.opacity = 0.5;
+    document.querySelector(".click_lvl").style.pointerEvents = "none";
 }

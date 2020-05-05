@@ -4,17 +4,41 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="./css/main.css")
-        title Document
+        title KepKep's Cookies
     body
-        .uppgrades
-            .points_plus_ten__wrap
-                .points_plus_ten
-                p.points_plus_ten__text level:
-                    span.points_plus_ten__level 0
-        .cookie_wrap
-            .cookie
-        .points__wrap
-            span.points__text1 you have: 
-            span.points 0
-            span.points__text2  cookies!
+        .page_wrap
+            .uppgrade_wrap
+                .click_lvl
+                    img.click_lvl__img(src="svg/click_lvl.svg", alt="click_lvl")
+                    p.click_lvl__lvl_txt click lvl:
+                        span.click_lvl__lvl 0
+                    p.click_lvl__cost_txt cost:
+                        span.click_lvl__cost 0
+                .passive_lvl
+                    img.passive_lvl__img(src="svg/passive_lvl.svg", alt="passive_lvl")
+                    p.passive_lvl__lvl_txt passive lvl:
+                        span.passive_lvl__lvl 0
+                    p.passive_lvl__cost_txt cost:
+                        span.passive_lvl__cost 0
+                .crit_lvl
+                    img.crit_lvl__img(src="svg/crit_lvl.svg", alt="crit_lvl")
+                    p.crit_lvl__lvl_txt crit lvl:
+                        span.crit_lvl__lvl 0
+                    p.crit_lvl__cost_txt cost:
+                        span.crit_lvl__cost 0
+                .speed_lvl
+                    img.speed_lvl__img(src="svg/speed_lvl.svg", alt="speed_lvl")
+                    p.speed_lvl__lvl_txt speed lvl:
+                        span.speed_lvl__lvl 0
+                    p.speed_lvl__cost_txt cost:
+                        span.speed_lvl__cost 0
+
+            .cookie_wrap
+                .cookie
+                p.cookie__text your cookies:
+                    span.cookie__points 0
+
+            footer
+                p Made by: 
+                    span KepKep(Emīls Soldatovs)
         script(src="script.js")
