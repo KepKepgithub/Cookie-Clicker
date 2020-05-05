@@ -70,21 +70,73 @@ document.querySelector('.click_lvl__img').addEventListener('click',()=>{
         document.querySelector(".click_lvl").style.pointerEvents = "none";
     }
 })
+
 // passive income level uppgrade
 document.querySelector('.passive_lvl__img').addEventListener('click',()=>{
     if(passive_cost < points){
         passive_lvl++;
         document.querySelector('.passive_lvl__lvl').innerHTML = passive_lvl;
+        localStorage.setItem('passive_lvl_saved', 'true');
+        localStorage.setItem('passive_lvl',JSON.stringify(passive_lvl));
         passive_points = passive_points * 2;
         points = points - passive_cost;
+        localStorage.setItem('passive_points_saved', 'true');
+        localStorage.setItem('passive_points', JSON.stringify(passive_points));
         document.querySelector('.cookie__points').innerHTML = points;
         passive_cost = passive_cost * 5;
         document.querySelector('.passive_lvl__cost').innerHTML = passive_cost;
-        document.querySelector('')
+        localStorage.setItem('passive_cost_saved', 'true');
+        localStorage.setItem('passive_cost', JSON.stringify(passive_cost));
     }
     if(passive_lvl >= 10){
         document.querySelector(".passive_lvl").style.opacity = 0.5;
         document.querySelector(".passive_lvl").style.pointerEvents = "none";
+    }
+})
+
+// Crit level uppgrade
+document.querySelector('.crit_lvl__img').addEventListener('click',()=>{
+    if(crit_cost < points){
+        crit_lvl++;
+        document.querySelector('.crit_lvl__lvl').innerHTML = crit_lvl;
+        localStorage.setItem('crit_lvl_saved', 'true');
+        localStorage.setItem('crit_lvl',JSON.stringify(crit_lvl));
+        crit_value += 0.5;
+        points = points - crit_cost;
+        localStorage.setItem('crit_value_saved', 'true');
+        localStorage.setItem('crit_value', JSON.stringify(crit_value));
+        document.querySelector('.cookie__points').innerHTML = points;
+        crit_cost = crit_cost * 5;
+        document.querySelector('.crit_lvl__cost').innerHTML = crit_cost;
+        localStorage.setItem('crit_cost_saved', 'true');
+        localStorage.setItem('crit_cost', JSON.stringify(crit_cost));
+    }
+    if(crit_lvl >= 10){
+        document.querySelector(".crit_lvl").style.opacity = 0.5;
+        document.querySelector(".crit_lvl").style.pointerEvents = "none";
+    }
+})
+
+// speed level uppgrade
+document.querySelector('.speed_lvl__img').addEventListener('click',()=>{
+    if(speed_cost < points){
+        speed_lvl++;
+        document.querySelector('.speed_lvl__lvl').innerHTML = speed_lvl;
+        localStorage.setItem('speed_lvl_saved', 'true');
+        localStorage.setItem('speed_lvl',JSON.stringify(speed_lvl));
+        passive_speed = passive_speed - 100;
+        points = points - speed_cost;
+        localStorage.setItem('passive_speed_saved', 'true');
+        localStorage.setItem('passive_speed', JSON.stringify(passive_speed));
+        document.querySelector('.cookie__points').innerHTML = points;
+        speed_cost = speed_cost * 5;
+        document.querySelector('.speed_lvl__cost').innerHTML = speed_cost;
+        localStorage.setItem('speed_cost_saved', 'true');
+        localStorage.setItem('speed_cost', JSON.stringify(speed_cost));
+    }
+    if(speed_lvl >= 10){
+        document.querySelector(".speed_lvl").style.opacity = 0.5;
+        document.querySelector(".speed_lvl").style.pointerEvents = "none";
     }
 })
 
@@ -118,6 +170,28 @@ function points_gained(crit){
 }
 
 
+
+
+// The RESET button
+
+document.querySelector('.reset').addEventListener('click',()=>{
+    localStorage.clear();
+
+    document.querySelector('.click_lvl__lvl').innerHTML = click_lvl = click_lvl_check();
+    document.querySelector('.passive_lvl__lvl').innerHTML = passive_lvl = passive_lvl_check();
+    document.querySelector('.crit_lvl__lvl').innerHTML = crit_lvl = crit_lvl_check();
+    document.querySelector('.speed_lvl__lvl').innerHTML = speed_lvl = speed_lvl_check();
+    document.querySelector('.click_lvl__cost').innerHTML = click_cost = click_cost_check();
+    document.querySelector('.passive_lvl__cost').innerHTML = passive_cost = passive_cost_check();
+    document.querySelector('.crit_lvl__cost').innerHTML = crit_cost = crit_cost_check();
+    document.querySelector('.speed_lvl__cost').innerHTML = speed_cost = speed_cost_check();
+    document.querySelector('.cookie__points').innerHTML = points = points_check();
+    points_click = points_click_check();
+    passive_points = passive_points_check();
+    passive_speed = passive_speed_check();
+    crit_value = crit_value_check();
+})
+
 // Everything below here is just saving and loading(if saved);
 // These check if player has played before , if they haven't then set the values to default/starter
 // This one checks for uppgrade lvls
@@ -132,7 +206,7 @@ function click_lvl_check(){
 
 function passive_lvl_check(){
     if(localStorage.getItem('passive_lvl_saved') === 'true'){
-        // link to the local storage
+        return parseInt(localStorage.getItem('passive_lvl'));
     }
     else{
         return 0;
@@ -141,7 +215,7 @@ function passive_lvl_check(){
 
 function crit_lvl_check(){
     if(localStorage.getItem('crit_lvl_saved') === 'true'){
-        // return parseInt(localStorage.getItem('crit_lvl'));
+        return parseInt(localStorage.getItem('crit_lvl'));
     }
     else{
         return 0;
@@ -150,7 +224,7 @@ function crit_lvl_check(){
 
 function speed_lvl_check(){
     if(localStorage.getItem('speed_lvl_saved') === 'true'){
-        // link to the local storage
+        return parseInt(localStorage.getItem('speed_lvl'));
     }
     else{
         return 0;
@@ -169,7 +243,7 @@ function click_cost_check(){
 }
 function passive_cost_check(){
     if(localStorage.getItem('passive_cost_saved') === 'true'){
-        // link to the saved number
+        return parseInt(localStorage.getItem('passive_cost'));
     }
     else{
         return 200;
@@ -177,7 +251,7 @@ function passive_cost_check(){
 }
 function crit_cost_check(){
     if(localStorage.getItem('crit_cost_saved') === 'true'){
-        // link to the saved number
+        return parseInt(localStorage.getItem('crit_cost'));
     }
     else{
         return 200;
@@ -185,7 +259,7 @@ function crit_cost_check(){
 }
 function speed_cost_check(){
     if(localStorage.getItem('speed_cost_saved') === 'true'){
-        // link to the saved number
+        return parseInt(localStorage.getItem('speed_cost'));
     }
     else{
         return 200;
@@ -212,7 +286,7 @@ function points_click_check(){
 }
 function passive_points_check(){
     if(localStorage.getItem('passive_points_saved') === 'true'){
-        // link to the saved number
+        return parseInt(localStorage.getItem('passive_points'));
     }
     else{
         return 1;
@@ -220,15 +294,15 @@ function passive_points_check(){
 }
 function passive_speed_check(){
     if(localStorage.getItem('passive_speed_saved') === 'true'){
-        // link to the saved number
+        return parseInt(localStorage.getItem('passive_speed'));
     }
     else{
-        return 1500;
+        return 2000;
     }
 }
 function crit_value_check(){
     if(localStorage.getItem('crit_value_saved') === 'true'){
-        // link to the saved number
+        return parseInt(localStorage.getItem('crit_value'));
     }
     else{
         return 1.5;
@@ -241,25 +315,17 @@ if(click_lvl >= 10){
     document.querySelector(".click_lvl").style.opacity = 0.5;
     document.querySelector(".click_lvl").style.pointerEvents = "none";
 }
+if(crit_lvl >= 10){
+    document.querySelector(".crit_lvl").style.opacity = 0.5;
+    document.querySelector(".crit_lvl").style.pointerEvents = "none";
+}
+if(passive_lvl >= 10){
+    document.querySelector(".passive_lvl").style.opacity = 0.5;
+    document.querySelector(".passive_lvl").style.pointerEvents = "none";
+}
+if(speed_lvl >= 10){
+    document.querySelector(".passive_lvl").style.opacity = 0.5;
+    document.querySelector(".passive_lvl").style.pointerEvents = "none";
+}
 
 
-document.querySelector('.reset').addEventListener('click',()=>{
-    localStorage.clear();
-
-    document.querySelector('.click_lvl__lvl').innerHTML = click_lvl = click_lvl_check();
-    document.querySelector('.passive_lvl__lvl').innerHTML = passive_lvl = passive_lvl_check();
-    document.querySelector('.crit_lvl__lvl').innerHTML = crit_lvl = crit_lvl_check();
-    document.querySelector('.speed_lvl__lvl').innerHTML = speed_lvl = speed_lvl_check();
-    document.querySelector('.click_lvl__cost').innerHTML = click_cost = click_cost_check();
-    document.querySelector('.passive_lvl__cost').innerHTML = passive_cost = passive_cost_check();
-    document.querySelector('.crit_lvl__cost').innerHTML = crit_cost = crit_cost_check();
-    document.querySelector('.speed_lvl__cost').innerHTML = speed_cost = speed_cost_check();
-    document.querySelector('.cookie__points').innerHTML = points = points_check();
-    points_click = points_click_check();
-    passive_points = passive_points_check();
-    passive_speed = passive_speed_check();
-    crit_value = crit_value_check();
-})
-
-
-// TESTING TESTING GITCRACKEN
