@@ -97,6 +97,18 @@ body {
   transform: translateY(20px);
 }
 
+.reset {
+  font-size: 3.5rem;
+  padding: 2rem;
+  cursor: pointer;
+  color: brown;
+  background: #ffffff;
+  border: 5px solid black;
+}
+.reset:active {
+  filter: brightness(0.7);
+}
+
 footer {
   display: flex;
   justify-content: center;

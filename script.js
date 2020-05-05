@@ -44,8 +44,8 @@ document.querySelector('.cookie').addEventListener('click',()=>{
     // shows how many points player gained
     points_gained(crit);
 })
-// Click lvl uppgrade
 
+// Click lvl uppgrade
 document.querySelector('.click_lvl__img').addEventListener('click',()=>{
     if(click_cost < points){
         click_lvl++;
@@ -59,6 +59,7 @@ document.querySelector('.click_lvl__img').addEventListener('click',()=>{
         localStorage.setItem('points_click', JSON.stringify(points_click));
         // saves the new click price
         points = points - click_cost;
+        document.querySelector('.cookie__points').innerHTML = points;
         click_cost = click_cost * 5;
         document.querySelector('.click_lvl__cost').innerHTML = click_cost
         localStorage.setItem('click_cost_saved','true');
@@ -67,6 +68,23 @@ document.querySelector('.click_lvl__img').addEventListener('click',()=>{
     if(click_lvl >= 10){
         document.querySelector(".click_lvl").style.opacity = 0.5;
         document.querySelector(".click_lvl").style.pointerEvents = "none";
+    }
+})
+// passive income level uppgrade
+document.querySelector('.passive_lvl__img').addEventListener('click',()=>{
+    if(passive_cost < points){
+        passive_lvl++;
+        document.querySelector('.passive_lvl__lvl').innerHTML = passive_lvl;
+        passive_points = passive_points * 2;
+        points = points - passive_cost;
+        document.querySelector('.cookie__points').innerHTML = points;
+        passive_cost = passive_cost * 5;
+        document.querySelector('.passive_lvl__cost').innerHTML = passive_cost;
+        document.querySelector('')
+    }
+    if(passive_lvl >= 10){
+        document.querySelector(".passive_lvl").style.opacity = 0.5;
+        document.querySelector(".passive_lvl").style.pointerEvents = "none";
     }
 })
 
@@ -223,3 +241,22 @@ if(click_lvl >= 10){
     document.querySelector(".click_lvl").style.opacity = 0.5;
     document.querySelector(".click_lvl").style.pointerEvents = "none";
 }
+
+
+document.querySelector('.reset').addEventListener('click',()=>{
+    localStorage.clear();
+
+    document.querySelector('.click_lvl__lvl').innerHTML = click_lvl = click_lvl_check();
+    document.querySelector('.passive_lvl__lvl').innerHTML = passive_lvl = passive_lvl_check();
+    document.querySelector('.crit_lvl__lvl').innerHTML = crit_lvl = crit_lvl_check();
+    document.querySelector('.speed_lvl__lvl').innerHTML = speed_lvl = speed_lvl_check();
+    document.querySelector('.click_lvl__cost').innerHTML = click_cost = click_cost_check();
+    document.querySelector('.passive_lvl__cost').innerHTML = passive_cost = passive_cost_check();
+    document.querySelector('.crit_lvl__cost').innerHTML = crit_cost = crit_cost_check();
+    document.querySelector('.speed_lvl__cost').innerHTML = speed_cost = speed_cost_check();
+    document.querySelector('.cookie__points').innerHTML = points = points_check();
+    points_click = points_click_check();
+    passive_points = passive_points_check();
+    passive_speed = passive_speed_check();
+    crit_value = crit_value_check();
+})
