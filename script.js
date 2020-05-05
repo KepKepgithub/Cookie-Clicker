@@ -260,3 +260,6 @@ document.querySelector('.reset').addEventListener('click',()=>{
     passive_speed = passive_speed_check();
     crit_value = crit_value_check();
 })
+
+
+// TESTING TESTING GITCRACKEN
